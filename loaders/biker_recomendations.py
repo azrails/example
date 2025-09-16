@@ -1,18 +1,19 @@
 from .data_loader import DataLoader
-from typing import TypedDict
+from typing import TypedDict, Annotated
 import pandas as pd
 
+
 class BikersData(TypedDict):
-    train: pd.DataFrame
-    bikers: pd.DataFrame
-    tours: pd.DataFrame
-    tour_convoy: pd.DataFrame
-    bikers_network: pd.DataFrame
+    bikers: Annotated[pd.DataFrame, 'Biker demographic information (training-filtered)']
+    tours: Annotated[pd.DataFrame, 'Tour features and word counts (training-filtered)']
+    tour_convoy: Annotated[pd.DataFrame, 'Tour participation lists (training-filtered)']
+    bikers_network: Annotated[pd.DataFrame, 'Social network connections (training-filtered)']
+
+class BikersTrain(BikersData):
+    train: Annotated[pd.DataFrame, 'Training interactions with like/dislike labels']
 
 class Dataset(TypedDict):
-    X_train: BikersData
-    y_train: pd.DataFrame
-    X_val: BikersData
+    data: Annotated[BikersData, '']
 
 class BikerRecommenderDataLoader(DataLoader):
     """Data loader for biker tour recommendation system with multiple tables."""
